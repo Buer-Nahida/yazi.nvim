@@ -5,7 +5,7 @@ local function getpos(width, height, pos, ui)
   if type(pos) == "string" then
     if pos:sub(1, 1) == "c" then
       anchor = anchor .. "N"
-      x = math.ceil((ui.height - height) / 2)
+      x = math.ceil((ui.height - height) / 2 - 1)
     elseif pos:sub(1, 1) == "t" then
       anchor = anchor .. "N"
       x = 1
