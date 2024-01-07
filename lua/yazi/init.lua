@@ -82,16 +82,18 @@ local function yazi(opts)
   yazi_open("Yazi")
   ---@diagnostic disable-next-line: cast-local-type
   tempname = vim.fn.tempname()
-  vim.fn.termopen('yazi --chooser-file="' .. tempname .. '"', {
-    cwd = opts.cwd,
-    on_exit = function()
-      if vim.api.nvim_win_is_valid(winnr) then
-        close_float_win()
-        open_file(opts.open_command or "edit")
-      end
-      on_end()
-    end,
-  })
+  vim.fn.termopen(
+    'yazi --chooser-file="' .. tempname .. '"',
+    vim.tbl_extend("force", {
+      on_exit = function()
+        if vim.api.nvim_win_is_valid(winnr) then
+          close_float_win()
+          open_file(opts and opts.open_command or "edit")
+        end
+        on_end()
+      end,
+    }, opts and (opts.cwd and { cwd = opts.cwd } or {}) or {})
+  )
 end
 
 local function setup(opts)
