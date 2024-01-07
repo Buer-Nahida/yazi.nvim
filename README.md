@@ -60,13 +60,9 @@ or
 ```
 **If you want to open the file in a new tab, you can execute this command:**
 ```vim
-:Yazi tabedit
+:lua require("yazi").yazi({ open_command = "tabedit" })
 ```
-or
-```vim
-:lua require("yazi").yazi("tabedit")
-```
-**And you will be able to use the following **command arguments**:**
+**And you will be able to use the following `open_command` arguments:**
 | arguments       | description                    |
 |-----------------|--------------------------------|
 | `edit`(default) | open files in buffers          |

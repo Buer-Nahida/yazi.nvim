@@ -57,7 +57,11 @@ local function close_float_win()
   vim.api.nvim_set_current_win(prev_win)
 end
 
-local function yazi(open_command)
+---@class TerminalOpenOptions
+---@field open_command string
+---@field cwd string
+---@param opts TerminalOpenOptions
+local function yazi(opts)
   prev_win = vim.api.nvim_get_current_win()
   ---@diagnostic disable-next-line: cast-local-type
   workpath = vim.fn.getcwd()
@@ -79,10 +83,11 @@ local function yazi(open_command)
   ---@diagnostic disable-next-line: cast-local-type
   tempname = vim.fn.tempname()
   vim.fn.termopen('yazi --chooser-file="' .. tempname .. '"', {
+    cwd = opts.cwd,
     on_exit = function()
       if vim.api.nvim_win_is_valid(winnr) then
         close_float_win()
-        open_file(open_command or "edit")
+        open_file(opts.open_command or "edit")
       end
       on_end()
     end,
