@@ -58,9 +58,9 @@ or
 ```vim
 :lua require("yazi").yazi()
 ```
-**If you want to open the file in a new tab, you can execute this command:**
+**If you want to open the file in a new tab, and the working directory is `/` for yazi, you can execute this command:**
 ```vim
-:lua require("yazi").yazi({ open_command = "tabedit" })
+:lua require("yazi").yazi({ open_command = "tabedit", cwd = "/" })
 ```
 **And you will be able to use the following `open_command` arguments:**
 | arguments       | description                    |
