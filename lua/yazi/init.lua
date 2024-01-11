@@ -41,16 +41,6 @@ local function on_close()
   vim.cmd("silent! lcd " .. workpath)
 end
 
-local function yazi_open(name)
-  vim.api.nvim_create_autocmd("TermOpen", {
-    buffer = bufnr,
-    callback = function()
-      vim.api.nvim_command("file " .. name)
-      vim.cmd([[startinsert]])
-    end,
-  })
-end
-
 local function close_float_win()
   vim.api.nvim_win_close(winnr, true)
   vim.api.nvim_buf_delete(bufnr, { force = true })
@@ -79,7 +69,7 @@ local function yazi(opts)
   })
   WinInfo = win:GetInfo()
   winnr, bufnr = WinInfo.winnr, WinInfo.bufnr
-  yazi_open("Yazi")
+  vim.cmd([[startinsert]])
   ---@diagnostic disable-next-line: cast-local-type
   tempname = vim.fn.tempname()
   vim.fn.termopen(
