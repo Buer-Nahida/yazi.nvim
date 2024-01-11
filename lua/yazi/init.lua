@@ -51,7 +51,7 @@ end
 ---@field open_command string
 ---@field cwd string
 ---@param opts TerminalOpenOptions
-local function yazi(opts)
+local function open_yazi(opts)
   prev_win = vim.api.nvim_get_current_win()
   ---@diagnostic disable-next-line: cast-local-type
   workpath = vim.fn.getcwd()
@@ -88,10 +88,10 @@ end
 
 local function setup(opts)
   default_opts = vim.tbl_extend("force", default_opts, opts or {})
-  vim.api.nvim_create_user_command("Yazi", yazi, {})
+  vim.api.nvim_create_user_command("Yazi", open_yazi, {})
 end
 
 return {
   setup = setup,
-  yazi = yazi,
+  yazi = open_yazi,
 }
