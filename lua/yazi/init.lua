@@ -36,7 +36,7 @@ local function open_file(open_command)
   end
 end
 
-local function on_end()
+local function on_close()
   vim.fn.delete(tempname)
   vim.cmd("silent! lcd " .. workpath)
 end
@@ -90,7 +90,7 @@ local function yazi(opts)
           close_float_win()
           open_file(opts and opts.open_command or "edit")
         end
-        on_end()
+        on_close()
       end,
     }, opts and (opts.cwd and { cwd = opts.cwd } or {}) or {})
   )
