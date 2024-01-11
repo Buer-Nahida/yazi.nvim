@@ -93,5 +93,5 @@ end
 
 return {
   setup = setup,
-  yazi = open_yazi,
+  open = open_yazi,
 }
