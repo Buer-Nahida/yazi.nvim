@@ -10,7 +10,6 @@ local prev_win = -1
 local winnr = -1
 local bufnr = -1
 local tempname = ""
-local workpath = ""
 ---@type YaziFloatWindowOptions
 local default_opts = {
   size = {
@@ -38,7 +37,6 @@ end
 
 local function on_close()
   vim.fn.delete(tempname)
-  vim.cmd("silent! lcd " .. workpath)
 end
 
 local function close_float_win()
@@ -54,8 +52,6 @@ end
 local function open_yazi(opts)
   prev_win = vim.api.nvim_get_current_win()
   ---@diagnostic disable-next-line: cast-local-type
-  workpath = vim.fn.getcwd()
-  vim.cmd("silent! lcd %:p:h")
   local win = require("yazi.float_win")
   win:Create({
     width = default_opts.size.width,
@@ -72,18 +68,16 @@ local function open_yazi(opts)
   vim.cmd([[startinsert]])
   ---@diagnostic disable-next-line: cast-local-type
   tempname = vim.fn.tempname()
-  vim.fn.termopen(
-    'yazi --chooser-file="' .. tempname .. '"',
-    vim.tbl_extend("force", {
-      on_exit = function()
-        if vim.api.nvim_win_is_valid(winnr) then
-          close_float_win()
-          open_file(opts and opts.open_command or "edit")
-        end
-        on_close()
-      end,
-    }, opts and (opts.cwd and { cwd = opts.cwd } or {}) or {})
-  )
+  vim.fn.termopen('yazi --chooser-file="' .. tempname .. '"', {
+    cwd = opts.cwd,
+    on_exit = function()
+      if vim.api.nvim_win_is_valid(winnr) then
+        close_float_win()
+        open_file(opts and opts.open_command or "edit")
+      end
+      on_close()
+    end,
+  })
 end
 
 local function setup(opts)
