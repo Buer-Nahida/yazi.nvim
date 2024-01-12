@@ -35,10 +35,6 @@ local function open_file(open_command)
   end
 end
 
-local function on_close()
-  vim.fn.delete(tempname)
-end
-
 local function close_float_win()
   vim.api.nvim_win_close(winnr, true)
   vim.api.nvim_buf_delete(bufnr, { force = true })
@@ -75,7 +71,7 @@ local function open_yazi(opts)
         close_float_win()
         open_file(opts and opts.open_command or "edit")
       end
-      on_close()
+      vim.fn.delete(tempname)
     end,
   })
 end
