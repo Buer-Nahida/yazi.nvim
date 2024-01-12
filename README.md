@@ -1,8 +1,4 @@
-<h1 align="center">
-
-yazi.nvim
-
-</h1>
+<h1 align="center"> yazi.nvim </h1>
 <h3 align="right">
 
 *—— A [Neovim](https://github.com/neovim/neovim) plugin for [Yazi](https://github.com/sxyazi/yazi)*
@@ -10,20 +6,25 @@ yazi.nvim
 </h3>
 
 <!--toc:start-->
-- [yazi.nvim](#yazi.nvim)
-  - [Dependencies](#dependencies)
-  - [Install](#install)
-  - [Configuration](#configuration)
-  - [Using](#using)
+- [Disclaimer](#disclaimer)
+- [Dependencies](#dependencies)
+- [Install](#install)
+- [Configuration](#configuration)
+- [Using](#using)
 <!--toc:end-->
 
-#### Disclaimer:
+#### Disclaimer
+
 I straight-up copied most of the code in this plugin from [ranger.nvim](https://github.com/Kicamon/ranger.nvim) because I just wanted something working asap. The only reason I didn't fork [ranger.nvim](https://github.com/Kicamon/ranger.nvim) but made a new repository instead was because this is plugin for a completely different purpose (not for using [Ranger](https://github.com/ranger/ranger)). I want to give credits to [the author of ranger.nvim](https://github.com/Kicamon) for writing awesome code and thank him for using the MIT licence.
 
 ## Dependencies
+
 - [Yazi](https://github.com/sxyazi/yazi)
+
 ## Install
+
 **lazy.nvim**
+
 ```lua
 {
   "SR-MyStar/yazi.nvim",
@@ -32,8 +33,11 @@ I straight-up copied most of the code in this plugin from [ranger.nvim](https://
   },
 }
 ```
+
 ## Configuration
+
 **defualt config**
+
 ```lua
 {
   window = {
@@ -49,19 +53,34 @@ I straight-up copied most of the code in this plugin from [ranger.nvim](https://
   },
 }
 ```
+
 ## Using
+
 **Open selected files in new buffers:**
+
 ```vim
 :Yazi
 ```
+
 or
+
 ```vim
 :lua require("yazi").open()
 ```
+
 **If you want to open the file in a new tab, and the working directory is `/` for yazi, you can execute this command:**
+
 ```vim
 :lua require("yazi").open({ open_command = "tabedit", cwd = "/" })
 ```
+
+**You will be able to use the following arguments:**
+| arguments      | description                  |
+|----------------|------------------------------|
+| `open_command` | use command to open files    |
+| `cwd`          | change working directory     |
+| `on_open`      | do something on opening yazi |
+
 **And you will be able to use the following `open_command` arguments:**
 | arguments       | description                    |
 |-----------------|--------------------------------|

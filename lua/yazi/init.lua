@@ -1,10 +1,10 @@
 ---@class YaziFloatWindowOptions
 ---@field border?     "none" | "single" | "double" | "rounded" | "solid" | "shadow"
 ---@field title?      string
----@field title_pos? "center" | "left" | "right"
----@field size?      { width: number, height: number }
----@field style?     "" | "minimal"
----@field pos?       "tl" | "tr" | "cc" | "bl" | "br"
+---@field title_pos?  "center" | "left" | "right"
+---@field size?       { width: number, height: number }
+---@field style?      "" | "minimal"
+---@field pos?        "tl" | "tr" | "cc" | "bl" | "br"
 
 local prev_win = -1
 local winnr = -1
@@ -43,7 +43,8 @@ end
 
 ---@class TerminalOpenOptions
 ---@field open_command string
----@field cwd string
+---@field cwd          string
+---@field on_open      function
 ---@param opts TerminalOpenOptions
 local function open_yazi(opts)
   prev_win = vim.api.nvim_get_current_win()
@@ -61,6 +62,9 @@ local function open_yazi(opts)
   })
   WinInfo = win:GetInfo()
   winnr, bufnr = WinInfo.winnr, WinInfo.bufnr
+  if opts.on_open then
+    opts.on_open()
+  end
   vim.cmd.startinsert()
   ---@diagnostic disable-next-line: cast-local-type
   tempname = vim.fn.tempname()
