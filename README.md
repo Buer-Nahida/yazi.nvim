@@ -26,10 +26,10 @@ I straight-up copied most of the code in this plugin from [ranger.nvim](https://
 **lazy.nvim**
 ```lua
 {
-  "Kicamon/ranger.nvim",
+  "SR-MyStar/yazi.nvim",
   opts = {
     -- ...
-  }
+  },
 }
 ```
 ## Configuration
@@ -56,11 +56,11 @@ I straight-up copied most of the code in this plugin from [ranger.nvim](https://
 ```
 or
 ```vim
-:lua require("yazi").yazi()
+:lua require("yazi").open()
 ```
 **If you want to open the file in a new tab, and the working directory is `/` for yazi, you can execute this command:**
 ```vim
-:lua require("yazi").yazi({ open_command = "tabedit", cwd = "/" })
+:lua require("yazi").open({ open_command = "tabedit", cwd = "/" })
 ```
 **And you will be able to use the following `open_command` arguments:**
 | arguments       | description                    |
