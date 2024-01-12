@@ -61,7 +61,7 @@ local function open_yazi(opts)
   })
   WinInfo = win:GetInfo()
   winnr, bufnr = WinInfo.winnr, WinInfo.bufnr
-  vim.cmd([[startinsert]])
+  vim.cmd.startinsert()
   ---@diagnostic disable-next-line: cast-local-type
   tempname = vim.fn.tempname()
   vim.fn.termopen('yazi --chooser-file="' .. tempname .. '"', {
