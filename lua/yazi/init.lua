@@ -94,6 +94,7 @@ local function open_yazi(opts)
   })
 end
 
+---@param opts nil | YaziFloatWindowOptions
 local function setup(opts)
   default_opts = vim.tbl_extend("force", default_opts, opts or {})
   vim.api.nvim_create_user_command("Yazi", open_yazi, {})
