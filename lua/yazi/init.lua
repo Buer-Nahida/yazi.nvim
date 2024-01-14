@@ -24,7 +24,7 @@ local default_opts = {
 }
 
 local function open_file(open_command)
-  if vim.fn.filereadable(vim.fn.expand(tempname)) == 1 then
+  if vim.loop.fs_statfs(tempname) then
     if vim.api.nvim_buf_get_name(0) == "" then
       open_command = "edit"
     end
