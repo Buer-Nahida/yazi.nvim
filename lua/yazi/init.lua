@@ -23,7 +23,7 @@ local default_opts = {
   title_pos = "center",
 }
 
-local function open_file(open_command, open_dir)
+local function open(open_command, open_dir)
   if vim.loop.fs_statfs(tempname) then
     local filenames = vim.fn.readfile(tempname)
     if vim.fn.isdirectory(filenames[1]) then
@@ -80,7 +80,7 @@ local function open_yazi(opts)
     on_exit = function()
       if vim.api.nvim_win_is_valid(winnr) then
         close_float_win()
-        open_file(
+        open(
           opts and opts.open_command or "edit",
           opts and opts.open_dir or function(_) end
         )
