@@ -75,17 +75,9 @@ or
 ```
 
 **You will be able to use the following arguments:**
-| arguments      | description                  |
-|----------------|------------------------------|
-| `open_command` | use command to open files    |
-| `cwd`          | change working directory     |
-| `on_open`      | do something on opening yazi |
-| `open_dir`     | use a function to open dir   |
-
-**And you will be able to use the following `open_command` arguments:**
-| arguments       | description                    |
-|-----------------|--------------------------------|
-| `edit`(default) | open files in buffers          |
-| `tabedit`       | open files in tabs             |
-| `split`         | open files in horizontal split |
-| `vsplit`        | open files in vertical split   |
+| arguments         | description                  |
+|-------------------|------------------------------|
+| `open_file(path)` | use a function to open files |
+| `cwd`             | change working directory     |
+| `on_open()`       | do something on opening yazi |
+| `open_dir(path)`  | use a function to open dir   |

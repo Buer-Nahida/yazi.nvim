@@ -23,20 +23,17 @@ local default_opts = {
   title_pos = "center",
 }
 
-local function open(open_command, open_dir)
+local function open(open_file, open_dir)
   if vim.loop.fs_statfs(tempname) then
     local filenames = vim.fn.readfile(tempname)
     if vim.fn.isdirectory(filenames[1]) then
-      if #filenames == 1 then
-        open_dir(filenames[1])
+      if #filenames ~= 1 then
+        return
       end
-      return
-    end
-    if vim.api.nvim_buf_get_name(0) == "" then
-      open_command = "edit"
+      open_dir(filenames[1])
     end
     for _, filename in ipairs(filenames) do
-      vim.cmd(string.format(":%s %s", open_command, filename))
+      open_file(filename)
     end
   end
 end
@@ -48,10 +45,10 @@ local function close_float_win()
 end
 
 ---@class TerminalOpenOptions
----@field open_command? string
----@field open_dir?     fun(path: string)
----@field cwd?          string
----@field on_open?      function
+---@field open_file? fun(path: string)
+---@field open_dir?  fun(path: string)
+---@field cwd?       string
+---@field on_open?   fun()
 ---@param opts TerminalOpenOptions
 local function open_yazi(opts)
   prev_win = vim.api.nvim_get_current_win()
@@ -81,7 +78,7 @@ local function open_yazi(opts)
       if vim.api.nvim_win_is_valid(winnr) then
         close_float_win()
         open(
-          opts and opts.open_command or "edit",
+          opts and opts.open_file or vim.cmd.edit,
           opts and opts.open_dir or function(_) end
         )
       end
