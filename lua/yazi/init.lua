@@ -30,10 +30,9 @@ local function open(open_file, open_dir)
   if vim.loop.fs_statfs(tempname) then
     local filenames = vim.fn.readfile(tempname)
     if vim.fn.isdirectory(filenames[1]) then
-      if #filenames ~= 1 then
-        return
+      if #filenames == 1 then
+        open_dir(filenames[1])
       end
-      open_dir(filenames[1])
       return
     end
     for _, filename in ipairs(filenames) do
