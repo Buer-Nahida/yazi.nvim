@@ -1,20 +1,23 @@
----@class YaziFloatWindowOptions
----@field border?     "none" | "single" | "double" | "rounded" | "solid" | "shadow"
----@field title?      string
----@field title_pos?  "center" | "left" | "right"
----@field size?       { width: number, height: number }
----@field style?      "" | "minimal"
----@field pos?        "tl" | "tr" | "cc" | "bl" | "br"
-
 local prev_win = -1
 local winnr = -1
 local bufnr = -1
 local tempname = ""
----@type YaziFloatWindowOptions
+---@class YaziFloatWindowOptions
+---@field border?       "none" | "single" | "double" | "rounded" | "solid" | "shadow"
+---@field title?        string
+---@field title_pos?    "center" | "left" | "right"
+---@field size?         { width: number, height: number }
+---@field style?        "" | "minimal"
+---@field pos?          "tl" | "tr" | "cc" | "bl" | "br"
+---@field command_args? TerminalOpenOptions
 local default_opts = {
   size = {
     width = 0.9,
     height = 0.8,
+  },
+  command_args = {
+    open_dir = vim.cmd.edit,
+    open_file = vim.cmd.edit,
   },
   pos = "cc",
   style = "minimal",
@@ -68,18 +71,22 @@ local function open_yazi(opts)
   winnr, bufnr = WinInfo.winnr, WinInfo.bufnr
   if opts.on_open then
     opts.on_open()
+  else
+    if default_opts.command_args.on_open then
+      default_opts.command_args.on_open()
+    end
   end
   vim.cmd.startinsert()
   ---@diagnostic disable-next-line: cast-local-type
   tempname = vim.fn.tempname()
   vim.fn.termopen('yazi --chooser-file="' .. tempname .. '"', {
-    cwd = opts.cwd,
+    cwd = opts.cwd or default_opts.command_args.cwd,
     on_exit = function()
       if vim.api.nvim_win_is_valid(winnr) then
         close_float_win()
         open(
-          opts and opts.open_file or vim.cmd.edit,
-          opts and opts.open_dir or function(_) end
+          opts and opts.open_file or default_opts.command_args.open_file,
+          opts and opts.open_dir or default_opts.command_args.open_dir
         )
       end
       vim.fn.delete(tempname)
