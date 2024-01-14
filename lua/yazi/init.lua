@@ -29,14 +29,14 @@ local default_opts = {
 local function open(open_file, open_dir)
   if vim.loop.fs_statfs(tempname) then
     local filenames = vim.fn.readfile(tempname)
-    if vim.fn.isdirectory(filenames[1]) then
+    if vim.fn.isdirectory(filenames[1]) == 1 then
       if #filenames == 1 then
         open_dir(filenames[1])
       end
-      return
-    end
-    for _, filename in ipairs(filenames) do
-      open_file(filename)
+    else
+      for _, filename in ipairs(filenames) do
+        open_file(filename)
+      end
     end
   end
 end
@@ -80,7 +80,7 @@ local function open_yazi(opts)
   ---@diagnostic disable-next-line: cast-local-type
   tempname = vim.fn.tempname()
   vim.fn.termopen('yazi --chooser-file="' .. tempname .. '"', {
-    cwd = opts and opts.cwd or default_opts.command_args.cwd,
+    cwd = opts.cwd or default_opts.command_args.cwd,
     on_exit = function()
       if vim.api.nvim_win_is_valid(winnr) then
         close_float_win()
@@ -96,7 +96,13 @@ end
 
 ---@param opts nil | YaziFloatWindowOptions
 local function setup(opts)
+  local command_args = vim.tbl_extend(
+    "force",
+    default_opts.command_args,
+    opts and opts.command_args or {}
+  )
   default_opts = vim.tbl_extend("force", default_opts, opts or {})
+  default_opts.command_args = command_args
   vim.api.nvim_create_user_command("Yazi", open_yazi, {})
 end
 
