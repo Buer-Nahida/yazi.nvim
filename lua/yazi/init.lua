@@ -69,7 +69,7 @@ local function open_yazi(opts)
   })
   WinInfo = win:GetInfo()
   winnr, bufnr = WinInfo.winnr, WinInfo.bufnr
-  if opts.on_open then
+  if opts and opts.on_open then
     opts.on_open()
   else
     if default_opts.command_args.on_open then
@@ -80,7 +80,7 @@ local function open_yazi(opts)
   ---@diagnostic disable-next-line: cast-local-type
   tempname = vim.fn.tempname()
   vim.fn.termopen('yazi --chooser-file="' .. tempname .. '"', {
-    cwd = opts.cwd or default_opts.command_args.cwd,
+    cwd = opts and opts.cwd or default_opts.command_args.cwd,
     on_exit = function()
       if vim.api.nvim_win_is_valid(winnr) then
         close_float_win()
