@@ -34,6 +34,7 @@ local function open(open_file, open_dir)
         return
       end
       open_dir(filenames[1])
+      return
     end
     for _, filename in ipairs(filenames) do
       open_file(filename)
