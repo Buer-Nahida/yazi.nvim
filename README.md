@@ -80,6 +80,7 @@ or
 | `open_command` | use command to open files    |
 | `cwd`          | change working directory     |
 | `on_open`      | do something on opening yazi |
+| `open_dir`     | use a function to open dir   |
 
 **And you will be able to use the following `open_command` arguments:**
 | arguments       | description                    |
