@@ -34,6 +34,22 @@ I straight-up copied most of the code in this plugin from [ranger.nvim](https://
 }
 ```
 
+or use Lazy-load feature
+
+```lua
+{
+  "SR-Mystar/yazi.nvim",
+  lazy = true,
+  cmd = "Yazi",
+  opts = {
+    -- ...
+  },
+  keys = {
+    -- ...
+  },
+}
+```
+
 ## Configuration
 
 **defualt config**
