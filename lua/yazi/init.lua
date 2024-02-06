@@ -52,7 +52,7 @@ end
 ---@field open_dir?  fun(path: string)
 ---@field cwd?       string
 ---@field on_open?   fun()
----@param opts TerminalOpenOptions
+---@param opts? TerminalOpenOptions
 local function open_yazi(opts)
   prev_win = vim.api.nvim_get_current_win()
   ---@diagnostic disable-next-line: cast-local-type
@@ -80,7 +80,7 @@ local function open_yazi(opts)
   ---@diagnostic disable-next-line: cast-local-type
   tempname = vim.fn.tempname()
   vim.fn.termopen('yazi --chooser-file="' .. tempname .. '"', {
-    cwd = opts.cwd or default_opts.command_args.cwd,
+    cwd = opts and opts.cwd or default_opts.command_args.cwd,
     on_exit = function()
       if vim.api.nvim_win_is_valid(winnr) then
         close_float_win()
