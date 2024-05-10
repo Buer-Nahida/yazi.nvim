@@ -5,6 +5,10 @@
 
 </h3>
 
+> [!WARNING]
+>
+> ### **I gave up this project, because I haven't extra time to care it and I found a plugin \([mikavilpas/yazi.nvim](https://github.com/mikavilpas/yazi.nvim)\) same as and better than this plugin, you can use that plugin instead of this.**
+
 <!--toc:start-->
 - [Disclaimer](#disclaimer)
 - [Dependencies](#dependencies)

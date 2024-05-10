@@ -3,13 +3,14 @@ local winnr = -1
 local bufnr = -1
 local tempname = ""
 ---@class YaziFloatWindowOptions
----@field border?       "none" | "single" | "double" | "rounded" | "solid" | "shadow"
----@field title?        string
----@field title_pos?    "center" | "left" | "right"
----@field size?         { width: number, height: number }
----@field style?        "" | "minimal"
----@field pos?          "tl" | "tr" | "cc" | "bl" | "br"
----@field command_args? TerminalOpenOptions
+---@field border?          "none" | "single" | "double" | "rounded" | "solid" | "shadow"
+---@field title?           string
+---@field title_pos?       "center" | "left" | "right"
+---@field size?            { width: number, height: number }
+---@field style?           "" | "minimal"
+---@field pos?             "tl" | "tr" | "cc" | "bl" | "br"
+---@field command_args?    TerminalOpenOptions
+---@field continue_use_it? boolean You want continue to use it
 local default_opts = {
   size = {
     width = 0.9,
@@ -19,6 +20,7 @@ local default_opts = {
     open_dir = vim.cmd.edit,
     open_file = vim.cmd.edit,
   },
+  continue_use_it = false,
   pos = "cc",
   style = "minimal",
   border = "single",
@@ -103,6 +105,17 @@ local function setup(opts)
   )
   default_opts = vim.tbl_extend("force", default_opts, opts or {})
   default_opts.command_args = command_args
+  if not default_opts.continue_use_it then
+    vim.notify(
+      [[I give up this project, because I have't time to care it and I found
+a plugin https://github.com/mikavilpas/yazi.nvim same as and better than this
+plugin you can use that plugin instead of this.
+
+If you want disable this warning, please set `opts.continue_use_it` to `true`]],
+      vim.log.levels.WARN,
+      { title = "Yazi.nvim" }
+    )
+  end
   vim.api.nvim_create_user_command("Yazi", open_yazi, {})
 end
 
